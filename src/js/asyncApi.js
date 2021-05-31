@@ -7,13 +7,17 @@ export default class PhotoApiService {
     this.page = 1;
   }
   async fetchPhotos() {
-    const response = await fetch(
-      `${BASE_URL}/?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=12&key=${API_KEY}`,
-    );
+    try {
+      const response = await fetch(
+        `${BASE_URL}/?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=12&key=${API_KEY}`,
+      );
 
-    const data = await response.json();
-    this.incrementPage();
-    return data.hits;
+      const data = await response.json();
+      this.incrementPage();
+      return data.hits;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   incrementPage() {
